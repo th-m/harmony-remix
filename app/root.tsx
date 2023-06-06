@@ -9,6 +9,9 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import stylesheet from "./styles/app.css";
+import { AuthProvider } from "./hooks/use.auth";
+import { KollaTokenWrapper, KollaWrapper } from "./hooks/use.kolla.token.client";
+import { Suspend } from "./components/suspend";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -25,7 +28,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <main className="bg-slate-900 min-h-screen font-sans text-base text-gray-200">
+          <Suspend>
+            <AuthProvider>
+              <KollaWrapper>
+                <Outlet />
+              </KollaWrapper>
+            </AuthProvider>
+          </Suspend>
+        </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

@@ -3,11 +3,12 @@
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev",
-    "start": "cross-env NODE_ENV=production netlify dev",
+    "dev": "netlify dev",
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@kolla/js-sdk": "^0.1.50",
+    "@kolla/react-sdk": "^0.1.50",
     "@netlify/functions": "^1.4.0",
     "@remix-run/css-bundle": "^1.16.1",
     "@remix-run/netlify": "^1.16.1",
@@ -15,6 +16,7 @@
     "@remix-run/react": "^1.16.1",
     "cross-env": "^7.0.3",
     "firebase": "^9.22.1",
+    "firebase-admin": "^11.9.0",
     "firebaseui": "^6.0.2",
     "isbot": "^3.6.8",
     "react": "^18.2.0",

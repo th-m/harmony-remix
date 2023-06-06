@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Auth, onAuthStateChanged, sendEmailVerification } from "firebase/auth";
+import type { Auth} from "firebase/auth";
+import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import { auth, uiConfig } from "~/models/firebase.client";
 const ELEMENT_ID = "firebaseui_container";
@@ -42,22 +43,9 @@ function FirebaseAuth({
 }
 
 export const Login = () => {
-  const [open, setOpen] = useState(false);
-  const isLoggedIn = !!auth.currentUser?.uid;
+
   const [sent, setSent] = useState(false);
-  const [consent, setConsent] = useState(false);
-  const initText = isLoggedIn ? "Logout" : "Login";
-  const emailVerified = auth.currentUser?.emailVerified;
-  const [btnText, setBtnText] = useState(initText);
-  const [fireUI, setUI] = useState(null);
-  const handleBtnClick = async () => {
-    if (isLoggedIn) {
-      await auth.signOut();
-      setBtnText("Login");
-    } else {
-      setOpen(true);
-    }
-  };
+  
 
   const handleEmailVerify = () => {
     if (auth && auth.currentUser) {
@@ -67,14 +55,30 @@ export const Login = () => {
       });
     }
   };
-
+  if(!auth){
+    return null;
+  }
   return (
     <>
-      <button onClick={handleBtnClick}>Login/Signup</button>
-      <dialog open={open} className="relative">
-        <span className="absolute object-right-top" onClick={() => setOpen(false)}>X</span>
       <FirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-      </dialog>
     </>
   );
+};
+
+export const Logout = () => {
+  const isLoggedIn = !!auth?.currentUser?.uid;
+
+  const handleLogout = async () => {
+    await auth?.signOut();
+  };
+
+  if (isLoggedIn) {
+    return (
+      <>
+        <button onClick={handleLogout}>Logout</button>
+      </>
+    );
+  } else {
+    return null;
+  }
 };

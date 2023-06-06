@@ -1,4 +1,4 @@
-import { useEnhancedEffect } from './use.enhanced.effect';
+import { useEnhancedEffect } from '../hooks/use.enhanced.effect';
 import * as React from 'react';
 export interface NoSsrProps {
     /**

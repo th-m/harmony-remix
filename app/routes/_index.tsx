@@ -1,18 +1,35 @@
 import type { V2_MetaFunction } from "@remix-run/node";
-import { Header } from "~/components/header";
+import { useNavigate } from "@remix-run/react";
+import { useEffect } from "react";
+import { Login, Logout } from "~/components/login.client";
+import { Suspend } from "~/components/suspend";
+import { useAuth } from "~/hooks/use.auth";
 
 export const meta: V2_MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Harmony Hub" },
+    { name: "description", content: "We are Unifying Productivity!" },
   ];
 };
 
 export default function Index() {
+  const auth = useAuth()
+  console.log(auth)
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(auth?.user?.uid){
+      navigate('/dashboard')
+    }
+  },[auth?.user?.uid])
   return (
-    <div className="bg-slate-900 min-h-screen font-sans text-base text-gray-200" >
-      <Header />
+    <>
       <h1 className="text-6xl m-auto text-center">Harmony Hub</h1>
-    </div>
+      <span className="flex flex-1">
+        <Suspend>
+          <Login />
+          <Logout />
+        </Suspend>
+      </span>
+    </>
   );
 }
