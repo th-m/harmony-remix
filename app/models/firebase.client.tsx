@@ -25,7 +25,7 @@ const githubProvider = new GithubAuthProvider();
     signInOptions: [
       googleProvider.providerId,
       emailProvider.providerId,
-      // githubProvider.providerId
+      githubProvider.providerId
     ],
     callbacks: {
       // Avoid redirects after sign-in.
